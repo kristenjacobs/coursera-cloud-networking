@@ -1,4 +1,4 @@
-# Notes from Coursera: Cloud Networking
+## Coursera Cloud Networking Notes
 
 - [week1](week1/notes.md)
 - [week2](week2/notes.md)
