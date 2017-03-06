@@ -78,7 +78,55 @@ Common themes to solving the above problems:
 - Similar to above in many ways. Also aims to minimise the link sharing of different
   flows even during the changing of routes for existing flows.
 
+# 4.2.1 CDNs - Part 1
 
+Users care about low latencies: Google research shows that an additional delay of
+0.4s equates to 0.74% fewer searches. However, around the globe requests are of the 
+order of 300ms per round trip, so a few of those would make the site seem slow.
+
+Static caching (at the ISP level) is not enough due to:
+1. Volume and diversity of data.
+2. Dynamic content, i.e. changing over time (news), per personalised.
+3. Encrypted content.
+
+CNSs address these issues, and will serve ~60% of all internet traiffic by 2019.
+
+**How CDNs work**
+
+1. Distribute the servers globally.
+
+  - At internet exchange points (i.e. London or Frankfurt)? 
+  Or maybe in an IPSs DC connected directly to an exchange point.
+
+2. Replicate the content or service on each.
+
+3. Direct clients of the service to the most appropriate server.
+
+**CDN Routing (between the nodes)**
+
+In general, internet routing doesnt always pick the best path based on lower latency,
+but might take other factors (cost, politics?) into account when choosing a route.
+Also, a route via a 3rd node might be quicker than going directly, i.e. a->b is slower
+than a->x->b (triangle inequality violation). To counter these problems we employ
+**Overlay Routing**. This can be achieved via tunneling. to summarise, the CDN could 
+monitor the current latency over the internet and use this info to choose the best 
+routes to tunnel between its nodes. 
+
+# 4.2.2 CDNs - Part 2
+
+TODO
+
+# 4.3.1 Client Connectivity
+
+TODO
+
+# 4.4.1 Coping with Network Performance: Application-layer Tweaks for Lower Latency 
+
+TODO
+
+# 4.4.2 Coping with Network Performance: Video Streaming Adaptation in the Face of Variable Bandwidth
+
+TODO
 
 
     
