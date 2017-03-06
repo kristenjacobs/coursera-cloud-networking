@@ -1,6 +1,6 @@
-## Cloud Networking Week 2
+# Cloud Networking Week 2
 
-# 2.1.1 Host Virtualisation
+## 2.1.1 Host Virtualisation
 
 Required to provide greater utilisation.
 
@@ -31,7 +31,7 @@ workload.
   To gain speed, a hash table in the kernel is used to index into the forwarding table,
   thus we get a constant time lookup for each forwarding route.
 
-# 2.2.1 Routing and Traffic Engineering
+## 2.2.1 Routing and Traffic Engineering
 
 - 2 general classes of routing protocols:
 
@@ -82,7 +82,7 @@ workload.
   i.e. each router will discard longer paths to dest IPs if it already has knowledge
   of a shorter path in its routing table.
 
-# 2.2.2 Routing and Traffic Engineering: Packet Forwarding on Multiple Paths
+## 2.2.2 Routing and Traffic Engineering: Packet Forwarding on Multiple Paths
 
 - Goal: Minimise network congestion.
 
@@ -113,7 +113,7 @@ workload.
   each of its potential destination, thus we can choose the least congested path.
   Done on a flowlet granularity.
 
-# 2.3.1 Congestion Control: Part 1
+## 2.3.1 Congestion Control: Part 1
 
 Problem: Multiple flows need to share network links. We need to choose the sending rate
 such that it is not so high as packets are lost (thus need retransmission), but not too low
@@ -128,7 +128,7 @@ such that the netwrok is being underutilised.
   halve the transmission rate. If we miss enough, then TCP will timeout the connection
   and start from the beginning again.
 
-# 2.3.2 Congestion Control: Part 2
+## 2.3.2 Congestion Control: Part 2
 
 Problems with the TCP congestion control scheme:
 
@@ -141,7 +141,7 @@ Problems with the TCP congestion control scheme:
 - **TCP Incast** Is a pathological condition that occurs when queues get too big.
   Can occur with burst traffic (i.e. scatter-gather).
 
-# 2.3.3 Congestion Control: Part 3
+## 2.3.3 Congestion Control: Part 3
 
 Solution to the above TCP problems is DCTCP (data center TCP).
 Here we don't wait until the buffer is full before decreasing the rate,

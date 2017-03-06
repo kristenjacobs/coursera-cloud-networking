@@ -1,6 +1,6 @@
-## Cloud Networking Week 3
+# Cloud Networking Week 3
 
-# 3.1.1 Software-Defined Networking Architecture - Part 1
+## 3.1.1 Software-Defined Networking Architecture - Part 1
 
 The problem (that SDN tries to solve):
 
@@ -23,7 +23,7 @@ The solution: **Software Defined Networking**
 
 - Also usually provide some sort of monitoring and topology discovery functionality.
 
-# 3.1.2 Software-Defined Networking Architecture - Part 2
+## 3.1.2 Software-Defined Networking Architecture - Part 2
 
 The evolution of SDN
 
@@ -70,9 +70,9 @@ Killer Apps for SDN
   2. Inter DC traffic engineering
     - Want 100% utilisation.
 
-# 3.2.1 Multi-Tenant Data Centers: The Challenges
+## 3.2.1 Multi-Tenant Data Centers: The Challenges
 
-Key needs
+### Key needs
 
 The ability to use any hardware for any VM at any time (i.e. **agility**). In
 traditional DCs, each rack might be allocated to a particular service or
@@ -87,7 +87,7 @@ services/tenants from each other** (i.e. **Micro Segmentation**). We also might
 need to **support layer 2 services** (broadcast, etc), as some legacy
 applications might be relying on this environment.
 
-# 3.3.1 Network Virtualisation Case Study: VL2 - Part 1
+## 3.3.1 Network Virtualisation Case Study: VL2 - Part 1
 
 - Increasing traffic within DC is a bottleneck (4x that of the external traffic)
 
@@ -118,10 +118,10 @@ Note: This design has a similar effect to just using ECMP, but the
 anycast mechanism will cause the routing tables to be smaller at 
 each switch which might be significant once we scale up.
 
-# 3.3.1 Network Virtualisation Case Study: VL2 - Part 2
+## 3.3.1 Network Virtualisation Case Study: VL2 - Part 2
 
 TODO
 
-# 3.4.1 Network Virtualisation Case Study: NVP
+## 3.4.1 Network Virtualisation Case Study: NVP
 
 TODO

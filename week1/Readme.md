@@ -1,6 +1,6 @@
-## Cloud Networking Week 1
+# Cloud Networking Week 1
 
-# 1.1.1 Applications and Traffic Patterns
+## 1.1.1 Applications and Traffic Patterns
 
 - Typical traffic pattern in data centres follow the scatter-gather pattern,
   i.e. web-search.
@@ -14,7 +14,7 @@
 
 - More and more traffic is cross rack but still within the cluster/DC.
 
-# 1.2.1 Physical Structure
+## 1.2.1 Physical Structure
 
 - Servers in racks.
 
