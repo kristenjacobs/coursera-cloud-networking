@@ -131,35 +131,63 @@ and this requires additional round trips to set up the encryption.
 of the origin. i.e. www.abc.com/index.html will contain src="http://cdnurl.abc.com/image.jpeg"
 instead of src="http://www.abc.com/image.jpeg". 
 
-2. The clients browser will then attepmt to resolve cdnurl.abc.com. This will query the local resolver,
-which will then delegate to the top level resolver. The TL will respond with a C name (alias/cannonical name).
-The local DNS resolver will then query the CDN resolver to resolve this name. The CDN resolver can now respond
-with an IP address of a CDN server close to the local DNS server (which is assumed to be close to the client itself).
+2. The clients browser will then attepmt to resolve cdnurl.abc.com. This will
+query the local resolver, which will then delegate to the top level
+resolver. The TL will respond with a C name (alias/cannonical name).  The local
+DNS resolver will then query the CDN resolver to resolve this name. The CDN
+resolver can now respond with an IP address of a CDN server close to the local
+DNS server (which is assumed to be close to the client itself).
 
-3. At the CDN cluster, as load balancer will send the clients request to the appropriate server.
+3. At the CDN cluster, as load balancer will send the clients request to the
+appropriate server.
 
-4. The DNS responses are configured to have a short TTL, thus a single client wont nessasarily always
-get resolved to the same CND server.
+4. The DNS responses are configured to have a short TTL, thus a single client
+wont nessasarily always get resolved to the same CND server.
 
-However, if the client isnt using thier ISPs local resolver (i.e. using google DNS or openDNS) then this can 
-affect performance as the client is not nessasarily close to the DNS server, thus not close to the resolved
-CDN server.
+However, if the client isnt using thier ISPs local resolver (i.e. using google
+DNS or openDNS) then this can affect performance as the client is not
+nessasarily close to the DNS server, thus not close to the resolved CDN server.
 
 #### Solution 2: Based on anycast routing
 
-Anycast routing works by announcing the same IP prefix from BGP from different locations, i.e.
-a request to an IP can get reouted to 2 different servers, based on the fact that the request start 
-point was different. Routers on the internet will therefore have choices to make when populating thier
-routing tables, thus can choose the most appropriate one. This fixes the problem with the DNS approach,
-as we no longer need to assume that the client is close to their DNS server.
+Anycast routing works by announcing the same IP prefix from BGP from different
+locations, i.e.  a request to an IP can get reouted to 2 different servers,
+based on the fact that the request start point was different. Routers on the
+internet will therefore have choices to make when populating thier routing
+tables, thus can choose the most appropriate one. This fixes the problem with
+the DNS approach, as we no longer need to assume that the client is close to
+their DNS server.
 
-However, using this approach it is difficult to dynamcially pick different CDN servers based on the 
-observed load at each site, as BGP announcments take a while to propigate. Also BGP route flapping can 
-cause different destinations for packets in the same flow from the same client.
+However, using this approach it is difficult to dynamcially pick different CDN
+servers based on the observed load at each site, as BGP announcments take a
+while to propigate. Also BGP route flapping can cause different destinations
+for packets in the same flow from the same client.
 
 # 4.3.1 Client Connectivity
 
-TODO
+Applcations can demand either low latency (web serach), high bandwidth (video
+streaming), or both (online gaming). However, latency is typically the harder
+problem to solve (as we can always increase bandwidth though replication, but
+the speed of light is fixed!). CDNs can help with latency but not for all cases
+(i.e. it wont help with multiplayer gaming..)
+
+Studies show that the median inflation in latency over c (speed of light) is
+35x, i.e.  half of the websites in the world respond in over 35c. In 20% of the
+case, the slowdown is 100x over the speed of light!
+
+Breaking down the above for the median result:
+- DNS is 7.4c.
+- TCP handshake is 3.4c.
+- Request-reponce is 6.6c.
+- TCP transfer is 10.2c.
+
+Therefore the server processing time is a small fraction of the total page get time.
+
+## Ways to reduce latency
+
+1. Google's QUIC: Aims to remove the TCP handshake (which is there to stop
+client address spoofing), by using TCP cookies, i.e. the cookie is generated
+via a syn/syn-ack on the first go, then this is reused for some time.
 
 # 4.4.1 Coping with Network Performance: Application-layer Tweaks for Lower Latency 
 
