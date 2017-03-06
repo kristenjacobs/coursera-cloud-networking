@@ -94,7 +94,7 @@ applications might be relying on this environment.
 - Unpredictable, rapidly changing traffic patterns.
 
 => Design Result: Require a non-blocking fabric (where we have line card rates
-between all the servers, thus the netwrok fabric will not be the bottleneck.
+between all the servers, thus the network fabric will not be the bottleneck.
 
 VL2 choose a CLOS topology. They choose a routing algorithnm called 
 **oblivious routing**, which means that the path a packet travels along
@@ -122,7 +122,7 @@ each switch which might be significant once we scale up.
 
 ### Tennant/Application layer
 
-Tennants in the DC see a single big layer 2 network. The clients 
+Tenants in the DC see a single big layer 2 network. The clients 
 see application addresses (AA), which are location independent addresses.
 
 ### Physical network layer
@@ -144,6 +144,26 @@ server and wraps the AAs in an outer LA header.
 4. **Security**. Directory system can allow/deny connections of whether 
    to translate from AAs to LAs.
 
-## 3.4.1 Network Virtualisation Case Study: NVP
+## 3.4.1 Network Virtualisation Case Study: NVP (Network Virtualisation Platform)
 
+1. Can service an arbitrary network topology (i.e. layer 2 switching + layer 3
+routing). 
 
+2. Doesn't require any specific physical network, i.e. only requires any regular
+layer 3 network.
+
+### How does it work?
+
+The virtual network is modelled as a data path of open flow tables. This
+effectively simulates the entire virtual network on the hypervisor (in open v
+switch). If the simulation is such that the packet is allowed through, then a
+tunnel is setup across the physical network using the physical IP, then the
+packet is sent out across the network.
+
+To optimise, once the virtual network has been simulated once for a given
+source-dest combination, then a rule can be created for this in the kernel thus
+this simulation result can be cached. 
+
+A central controller will ensure that each hypervisor knows the complete
+physical network setup + the relevant virtual networks for the VMs on each
+node.
