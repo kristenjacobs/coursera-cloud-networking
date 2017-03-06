@@ -120,8 +120,30 @@ each switch which might be significant once we scale up.
 
 ## 3.3.1 Network Virtualisation Case Study: VL2 - Part 2
 
-TODO
+### Tennant/Application layer
+
+Tennants in the DC see a single big layer 2 network. The clients 
+see application addresses (AA), which are location independent addresses.
+
+### Physical network layer
+
+Use physical IP addresses (locator addresses LA).  Topology is is layer 3,
+routed via OSPF (although we could have used BGP here instead).
+
+### Virtualisation layer
+
+Use a directory server to maintain the AA to LA mapping. A server agent,
+running on each of the hypervisors (in a virtual switch), queries the directory
+server and wraps the AAs in an outer LA header.
+
+### Did we achieve our goals?
+
+1. **Agility**: AAs are location independent.
+2. **L2 network semantics**.
+3. **Performance uniformity**. Same performance between all VMS. 
+4. **Security**. Directory system can allow/deny connections of whether 
+   to translate from AAs to LAs.
 
 ## 3.4.1 Network Virtualisation Case Study: NVP
 
-TODO
+
