@@ -235,8 +235,18 @@ Solutions are:
 
 # 4.4.2 Coping with Network Performance: Video Streaming Adaptation in the Face of Variable Bandwidth
 
-TODO
+Buffering can be used, especiallly in the case of non-interactive streaming (although even in the interactive
+streaming cases like Skype, buffering on the order of 100ms is fine). However, if the buffer runs out,
+then the stream is paused. Common ways to solves this re as follows:
 
+1. Encode video in multiple bit-rates. Then the client can monitor its download capacity, and use
+this to requets a higher/lower defnition for subsequent chunks of content. This technique is called
+**adaptive bitrate streaming**.
+
+However, eastimating available capacity is hard, as this varys so much. Another approach is simply
+to use the buffer occupancy to control the request bit-rate, i.e. if the buffer is nearly empty, then
+lower the bit-rate, andf if it is full then requets a higher bit rate. Therefore, as long as the netwrok 
+capacity exceeds the lowest bit-rate, buffering will not occur.
 
     
 
