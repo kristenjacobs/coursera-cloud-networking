@@ -191,7 +191,47 @@ via a syn/syn-ack on the first go, then this is reused for some time.
 
 # 4.4.1 Coping with Network Performance: Application-layer Tweaks for Lower Latency 
 
-TODO
+The **end to end principle** states that the responsibility for making sure
+that data is transferred across a network ultimately lies with the transferring
+application.  This can be done using checksums and retries/resends, and this
+check must still be implemented no matter how reliable the network is.
+However, in some cases applications delegate responsibility to lower layers
+to perform this gaurantees, as is the case with TCP.
+
+## Latency in the tail issues
+
+This is where a request needs to wait for many sub-requests to complete before
+returning its result, but due to network issues, a small fraction of these
+sub-requests takes much longer than the rest. 
+
+One solution, for certain types of applications is to ignore the results form
+any requests that take longer than a fixed time limit to respond. For example,
+web search is one application that is good in this case.
+
+Another solution is **rapid read protection**, as implemented in Cassandra, and
+googles big table.  This involves the monitoring of outstanding requests, and
+sending redundant requests to other replicas when the original is slower than
+expected. This works because the redundant request is unlikely to suffer from
+the same slowdown. The costs of this are as follows:
+
+1. Client side cost of making redundant request.
+2. Additional network traffic.
+3. Higher server load (for responding to extra requests)
+
+In general though, the costs are quite small and worth incurring.
+
+## Dealing with TCP incast
+
+TCP incast occurs when too many senders send to a single switch port, and the
+switch buffer overflows leading to high packet loss. Also, if some TCP flows
+lose to many packets, then they will timeout and the throughput colapses.
+Solutions are:
+
+1. limit the size of individual responses (thus it is less likely to overflow the buffer).
+2. Space out the requests (i.e. add delays), thus making it less likely to overflow the buffers.
+   In this case, we are sacrificing the average job time, to improve the tail cases. This is 
+   another layer of flow control on top of TCP, which works across connections.
+3. Use UDP instead of TCP. This is fine for applications that can accept some level of loss.
 
 # 4.4.2 Coping with Network Performance: Video Streaming Adaptation in the Face of Variable Bandwidth
 
