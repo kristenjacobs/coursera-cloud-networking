@@ -28,29 +28,40 @@
 - This is possible for small numbers of servers. However, becomes impractical
   as the DC grows.
 
-- Could organise the network as a (redundant) tree instead?
+### Tree Network Architecture 
+
+- Could organise the network as a (redundant) tree instead. 
 
 - Traditional DC's use a 3-tier tree based (big switch) approach.
+  This has core routers at the top, aggregation (or distribution) routers
+  in the middle tier, and access (TOR) switches on the 3rd tier.
 
-  - Simple architecture, can use a spanning tree for routing.
+- Simple architecture, can use a spanning tree for routing which ensures that 
+  there are no loops. There can still be redundancy. However, only one primary route
+  is used at any one time, the redundant routes only being used in the case of failure.
 
-  - Suffers from congestion at the top of the network.
+- Suffers from congestion at the top of the network.
 
-  - However, the big switch approach has the problem that the bandwidth within the 
+- However, the big switch approach has the problem that the bandwidth within the 
   rack is much greater than the bandwidth across racks. Therefore, it makes sense
   to optimise for local traffic. This however, means the problem of placement 
   becomes an issue.
   
-  - Big switches are expensive.
+- Big switches are expensive.
   
-  - Only scales vertically, i.e. you have to buy a bigger switch, and doesn't scale well horizontally, 
+- Only scales vertically, i.e. you have to buy a bigger switch, and doesn't scale well horizontally, 
   i.e. there are maximum sizes to switches. Also, the latest/fastest switch models might not be the biggest,
-  thus upgrading your netwrok hardware becomes slow/expensive.
+  thus upgrading your network hardware becomes slow/expensive.
 
-- Modern approach is a CLOS topology (fat tree network)
-  This uses smaller switches in layers to simulate the operation of a big single switch.
+### CLOS (Spine/Leaf) Network Architecture
 
-  - In fact, internally big switches use CLOS networks between the cards inside the switch, but this
+- Modern approach is a CLOS topology. This uses smaller switches in layers to 
+  simulate the operation of a big single switch.
+
+- This ensures that all devices are the same distance from each other, thus the 
+  latency between 2 devices is fixed and predictable.
+
+- In fact, internally big switches use CLOS networks between the cards inside the switch, but this
   is hidden from the user. The CLOS approach is then a bit like exploding the big switch, and creating 
   one distributed big switch from lots of little commodity switches.
 
