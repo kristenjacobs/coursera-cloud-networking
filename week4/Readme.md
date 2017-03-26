@@ -14,26 +14,26 @@ different regions for the following reasons:
 Therefore, inter data-center traffic/bandwidth is important
 as there is now more traffic between DCs than between DCs and clients.
 
-The goal is inter DC networks is to provide persistent (dedicated) connectivity
-bewtten the end-points (~100s of Gbps)
+The goal of inter DC networks is to provide persistent (dedicated) connectivity
+between the end-points (~100s of Gbps)
 
 These WANs also have higher network design flexibility as they are typically
 operated/controlled by a single provider.
 
 However, WAN bandwidth is a very expensive resource!
 
-Traditional WAN approach is to use MPLS. Use a link state protocol (OSPF) to
-flood the topology to all nodes (DCs) in the WAN. Also pass the current
-bandwidth usage of links in the network to each node. Each ingress router can
-then set up a tunnel to the destination router based on the current traffic and
-the shortest pass info. The tunnel uses labels, and only the ingress and egress
-routers actually read the actual packet info. MPLS works over multiple
-protocols.
+Traditional WAN approach is to use MPLS (multi-protocol label switching). Use a
+link state protocol (OSPF) to flood the topology to all nodes (DCs) in the WAN.
+Also pass the current bandwidth usage of links in the network to each node.
+Each ingress router can then set up a tunnel to the destination router based on
+the current traffic and the shortest pass info. The tunnel uses labels, and
+only the ingress and egress routers actually read the actual packet info. MPLS
+works over multiple protocols.
 
 **Problem 1**: This can be inefficient, as these networks are provisioned for peak
 bandwidth. Therefore you are better off provisioning for the peak latency 
 sensitive traffic, an fill the gaps with the background traffic (i.e. backups).
-However, this is had to do with MPLS, as it doesn't work at the application level.
+However, this is hard to do with MPLS, as it doesn't work at the application level.
 
 **Problem 2**: Inflexible sharing. Only link level fairness is obtained. At the 
 flow level, it can be unfair.
@@ -121,7 +121,7 @@ TCP round trips through the CND node (syn, syn-ack, etc), and we have the TCP
 slow-start phase to get through.  To counter this, the CDN node could maintain
 a persistent TCP connection with the origin, thus the client only needs to do
 the TCP handshake with the local CDN node. This also helps SSL encrypted traffic,
-and this requires additional round trips to set up the encryption.
+as this requires additional round trips to set up the encryption.
 
 ### How do clients find the most appropriate server?
 
@@ -131,7 +131,7 @@ and this requires additional round trips to set up the encryption.
 of the origin. i.e. www.abc.com/index.html will contain src="http://cdnurl.abc.com/image.jpeg"
 instead of src="http://www.abc.com/image.jpeg". 
 
-2. The clients browser will then attepmt to resolve cdnurl.abc.com. This will
+2. The clients browser will then attempt to resolve cdnurl.abc.com. This will
 query the local resolver, which will then delegate to the top level
 resolver. The TL will respond with a C name (alias/cannonical name).  The local
 DNS resolver will then query the CDN resolver to resolve this name. The CDN
@@ -240,12 +240,12 @@ streaming cases like Skype, buffering on the order of 100ms is fine). However, i
 then the stream is paused. Common ways to solves this re as follows:
 
 1. Encode video in multiple bit-rates. Then the client can monitor its download capacity, and use
-this to requets a higher/lower defnition for subsequent chunks of content. This technique is called
+this to requets a higher/lower definition for subsequent chunks of content. This technique is called
 **adaptive bitrate streaming**.
 
 However, eastimating available capacity is hard, as this varys so much. Another approach is simply
 to use the buffer occupancy to control the request bit-rate, i.e. if the buffer is nearly empty, then
-lower the bit-rate, andf if it is full then requets a higher bit rate. Therefore, as long as the netwrok 
+lower the bit-rate, and if it is full then requests a higher bit rate. Therefore, as long as the network 
 capacity exceeds the lowest bit-rate, buffering will not occur.
 
     
